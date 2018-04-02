@@ -8,16 +8,20 @@ import UIKit
 
 extension CALayer {
 
-    func drawBorderShadow(shadowWidth: CGFloat) {
+    func drawBorderShadow(borderWidth: CGFloat, shadowRadius: CGFloat? = nil, shadowOpacity: Float? = nil, shadowColor: CGColor? = nil) {
+
+        self.shadowRadius = shadowRadius ?? self.shadowRadius
+        self.shadowOpacity = shadowOpacity ?? self.shadowOpacity
+        self.shadowColor = shadowColor ?? self.shadowColor
 
         let radius = cornerRadius
-        let width = bounds.width
-        let height = bounds.height
+        let width = frame.width
+        let height = frame.height
         let points: [CGPoint] = [
             // Outside
-            CGPoint(x: -shadowWidth + radius, y: -shadowWidth),
-            CGPoint(x: width + shadowWidth - radius, y: -shadowWidth),
-            CGPoint(x: width + shadowWidth - radius, y: -shadowWidth + radius),          // arc center
+            CGPoint(x: -borderWidth + radius, y: -borderWidth),
+            CGPoint(x: width + borderWidth - radius, y: -borderWidth),
+            CGPoint(x: width + borderWidth - radius, y: -borderWidth + radius),          // arc center
             // Inside
             CGPoint(x: width, y: radius),
             CGPoint(x: width - radius, y: radius),  // arc center
@@ -29,13 +33,13 @@ extension CALayer {
             CGPoint(x: width - radius, y: height - radius), // arc center
             CGPoint(x: width, y: radius),
             // Outside
-            CGPoint(x: width + shadowWidth, y: -shadowWidth + radius),
-            CGPoint(x: width + shadowWidth, y: height + shadowWidth - radius),
-            CGPoint(x: width + shadowWidth - radius, y: height + shadowWidth - radius), // arc center
-            CGPoint(x: -shadowWidth + radius, y: height + shadowWidth),
-            CGPoint(x: -shadowWidth + radius, y: height + shadowWidth - radius),        // arc center
-            CGPoint(x: -shadowWidth, y: -shadowWidth + radius),
-            CGPoint(x: -shadowWidth + radius, y: -shadowWidth + radius)                 // arc center
+            CGPoint(x: width + borderWidth, y: -borderWidth + radius),
+            CGPoint(x: width + borderWidth, y: height + borderWidth - radius),
+            CGPoint(x: width + borderWidth - radius, y: height + borderWidth - radius), // arc center
+            CGPoint(x: -borderWidth + radius, y: height + borderWidth),
+            CGPoint(x: -borderWidth + radius, y: height + borderWidth - radius),        // arc center
+            CGPoint(x: -borderWidth, y: -borderWidth + radius),
+            CGPoint(x: -borderWidth + radius, y: -borderWidth + radius)                 // arc center
         ]
 
         let path = CGMutablePath()
